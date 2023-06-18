@@ -143,7 +143,7 @@ def tripup(request,id):
 @csrf_exempt
 def webhook(request):
     if request.method == 'POST':
-        repo = Repo('./django-schools')
+        repo = Repo('chetan3010.pythonanywhere.com/')
         git = repo.git
         git.checkout('master')
         git.pull()
