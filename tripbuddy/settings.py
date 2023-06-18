@@ -55,7 +55,7 @@ MIDDLEWARE = [
     'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
-ROOT_URLCONF = 'tripbuddy_v01.urls'
+ROOT_URLCONF = 'tripbuddy.urls'
 
 TEMPLATES = [
     {
@@ -74,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'tripbuddy_v01.wsgi.application'
+WSGI_APPLICATION = 'tripbuddy.wsgi.application'
 
 
 # Database
