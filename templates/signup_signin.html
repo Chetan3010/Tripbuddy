@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends 'master.html' %}
+    {% load static %}
+</head>
+<body>
+{% block content %}
+{% if signup is True %}
+<div class="container container-form right-panel-active" id="container">
+{% else %}
+<div class="container container-form" id="container">
+{% endif %}
+    <div class="form-container sign-up-container">
+        <form class="form" method="POST" action="{% url 'account:signup' %}">
+            {% csrf_token %}
+            <h3 class="h1">Get started!</h1>
+
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="google">
+                <div class="google-box">
+                    <img src="{% static 'images/google.png' %}" alt="google-icon" class="google-icon">
+                </div>
+                <div class="google-title">
+                    <span>Continue with Google</span>
+                </div>
+            </a>
+
+            <h6>or use your email for registration</h6>
+
+            <input class="input" type="text" name="first_name" maxlength="150" placeholder="First name" required>
+            <input class="input" type="text" name="last_name" maxlength="150" placeholder="Last name" required>
+            <input class="input" type="text" name="username" maxlength="150" autofocus="" placeholder="Username" required>
+            <input class="input" type="email" name="email" maxlength="254" placeholder="Email" required>
+            <input class="input" type="password" name="password1" autocomplete="new-password" placeholder="Enter password" required>
+            <input class="input" type="password" name="password2" autocomplete="new-password" placeholder="Enter password again" required>
+            {% if messages %}
+            {% for i in messages %}
+                <span class="{{ i.tags }}">{{ i }}</span>
+            {% endfor %}
+            {% endif %}
+            <input class="button" type="submit" value="Sign Up">
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
+        <form class="form" method="POST" action="{% url 'account:signin' %}">
+            {% csrf_token %}
+            <h1 class="h1">Sign in</h1>
+
+            <a href="{% url 'social:begin' 'google-oauth2' %}" class="google">
+                <div class="google-box">
+                    <img src="{% static 'images/google.png' %}" alt="google-icon" class="google-icon">
+                </div>
+                <div class="google-title">
+                    <span>Continue with Google</span>
+                </div>
+            </a>
+
+            <h6>or use your account</h6>
+            <!-- <a href="" class="google-button">
+                <p class="google-text">Sign in with Google</p>
+            </a> -->
+
+
+
+            <input class="input" type="text" name="username" maxlength="150" placeholder="Username" required>
+            <input class="input" type="email" name="email" maxlength="254" placeholder="Email">
+            <input class="input" type="password" name="password" autocomplete="new-password" placeholder="Enter password" required>
+            {% if messages %}
+                {% for i in messages %}
+                    <span class="{{ i.tags }}">{{ i }}</span>
+                {% endfor %}
+            {% endif %}
+            <a class="a" href="#">Forgot your password?</a>
+            <input class="button" type="submit" value="Sign In">
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1 class="h1">Welcome Back!</h1>
+                <p class="p">To keep connected with us please login with your personal info</p>
+                <button class="ghost button" id="signIn">Sign In</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1 class="h1">Hello, Friend!</h1>
+                <p class="p">Enter your personal details and start journey with us</p>
+                <button class="ghost button" id="signUp">Sign Up</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>
+
+
+

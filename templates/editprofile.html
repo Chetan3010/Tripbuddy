@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends 'master.html' %}
+    {% load static %}
+</head>
+<body>
+    {% block content %}
+    <div class="container editprofile">
+        <h1 class="page-header">Edit your profile</h1>
+        <form class="form" method="POST">
+            {% csrf_token %}
+            <label for="fn">First Name</label>
+            <input id="fn" class="input" type="text" name="first_name" maxlength="150" placeholder="First name" value="{{ ud.first_name }}" required>
+            <label for="ln">Last Name</label>
+            <input id="ln" class="input" type="text" name="last_name" maxlength="150" placeholder="Last name" value="{{ ud.last_name }}" required>
+            <label for="username">Username</label>
+            <input id="username" class="input" type="text" name="username" maxlength="150" value="{{ ud.username }}" placeholder="Username" required>
+            <label for="email">Email Id</label>
+            <input id="email" class="input" type="email" name="email" maxlength="254" placeholder="Email" value="{{ ud.email }}" required>
+            <input class="bt" type="submit" value="SAVE">
+        </form>
+
+    </div>
+    {% endblock %}
+</body>
+</html>

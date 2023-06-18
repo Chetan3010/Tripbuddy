@@ -1,0 +1,27 @@
+{% load static %}
+<div class="triptypes">
+    <a href="{% url 'trips:filter_trips' 'tour' 'world' %}" class="triptype-box">
+        <img class="triptype-icon" src="{% static 'images/tourism.png' %}" alt="tours">
+        <span class="triptype-title">tours</span>
+    </a>
+    <a href="{% url 'trips:filter_trips' 'trek' 'world' %}" class="triptype-box">
+        <img class="triptype-icon" src="{% static 'images/tourist.png' %}" alt="treks">
+        <span class="triptype-title">treks</span>
+    </a>
+    <a href="{% url 'trips:filter_trips' 'resort' 'world' %}" class="triptype-box">
+        <img class="triptype-icon" src="{% static 'images/resort.png' %}" alt="resorts">
+        <span class="triptype-title">resorts</span>
+    </a>
+    <a href="{% url 'trips:filter_trips' 'event' 'world' %}" class="triptype-box">
+        <img class="triptype-icon" src="{% static 'images/stage.png' %}" alt="events">
+        <span class="triptype-title">events</span>
+    </a>
+    <a href="{% url 'trips:filter_trips' 'diving' 'world' %}" class="triptype-box">
+        <img class="triptype-icon" src="{% static 'images/scuba.png' %}" alt="diving">
+        <span class="triptype-title">diving</span>
+    </a>
+    <a href="{% url 'trips:filter_trips' 'skiing' 'world' %}" class="triptype-box">
+        <img class="triptype-icon" src="{% static 'images/ski.png' %}" alt="ski">
+        <span class="triptype-title">skiing</span>
+    </a>
+</div>

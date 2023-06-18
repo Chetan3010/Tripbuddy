@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends 'master.html' %}
+    {% load static %}
+</head>
+<body>
+    {% block content %}
+    <div class="container">
+        <h1 class="page-header">
+            Trip List
+        </h1>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Sublocation</th>
+                <th>Location</th>
+                <th>Country</th>
+                <th>Cost</th>
+                <th>Rating</th>
+                <th colspan="2">Modification</th>
+            </tr>
+            {% for i in tl %}
+            <tr>
+                <td class="subtext">{{i.trip_name}}</td>
+                <td class="subtext">{{i.trip_type}}</td>
+                <td class="subtext">{{i.trip_sublocation}}</td>
+                <td class="subtext">{{i.trip_location}}</td>
+                <td class="subtext">{{i.trip_country}}</td>
+                <td class="subtext">{{i.trip_cost}}</td>
+                <td class="subtext">{{i.trip_rating}}</td>
+                <td class="subtext"><a href="{% url 'account:tripup' i.id %}">Update</a></td>
+                <td class="subtext"><a href="{% url 'account:tripup' i.id %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endblock %}
+</body>
+</html>

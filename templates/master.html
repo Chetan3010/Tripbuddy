@@ -1,0 +1,138 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trip Buddy</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/tripbuddy.png' %}">
+</head>
+
+<body>
+    <div id="main">
+        <div class="container-fluid" style="border-bottom: 1px solid black; background-color: #f5f7fa;">
+
+
+            <div class="container">
+                <nav class="d-flex justify-content-between">
+                    <div class="logo">
+                        <a href="/">
+                            <img class="logo" src="{% static 'images/tripbuddy.png' %}" alt="tripbuddy-logo">
+                        </a>
+                    </div>
+                    <div class="brand"><a href="/">TripBuddy</a></div>
+                    <div class="acc dropdown">
+                        <a type="button" data-bs-toggle="dropdown" data-bs-toggle="tooltip" aria-expanded="false">
+                            {% if user.is_authenticated %}
+                            <img class="user" src="{% static 'images/man.png' %}" alt="user">
+                            {% else %}
+                            <img class="user" src="{% static 'images/user.png' %}" alt="user">
+                            {% endif %}
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% if user.is_authenticated %}
+                            <span class="dropdown-item username">{{ user }}</span>
+                            <hr>
+                            {% if user.is_superuser %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account:addtrip' %}">
+                                    <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
+                                        class="dropdown-icon">
+                                    <span>Add Trip</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account:addtripimg' %}">
+                                    <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
+                                        class="dropdown-icon">
+                                    <span>Add Trip Images</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account:triplist' %}">
+                                    <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
+                                        class="dropdown-icon">
+                                    <span>Trip List</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account:signout' %}">
+                                    <img src="{% static 'images/signout.png' %}" alt="sign out" class="dropdown-icon">
+                                    <span>sign out</span>
+                                </a>
+                            </li>
+                            {% else %}
+
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account:edit-profile' %}">
+                                    <img src="{% static 'images/edit-profile.png' %}" alt="edit profile"
+                                        class="dropdown-icon">
+                                    <span>edit profile</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account:mybookings' %}">
+                                    <img src="{% static 'images/bookings.png' %}" alt="my bookings"
+                                        class="dropdown-icon">
+                                    <span>my bookings</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account:signout' %}">
+                                    <img src="{% static 'images/signout.png' %}" alt="sign out" class="dropdown-icon">
+                                    <span>sign out</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% else %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account:signup_signin' %}">
+                                    <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
+                                        class="dropdown-icon">
+                                    <span>signup / signin</span>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+
+        <div class="footer">
+            <span class="foot-head">Made by Chetan...</span>
+            <div class="foot-links">
+                <a href="https://www.linkedin.com/in/chetan-kale-217974192/" class="linkedin">
+                    <img src="{% static 'images/linkedin.png' %}" alt="linkedin" class="foot-icon">
+                </a>
+                <a href="https://github.com/Chetan1030" class="github">
+                    <img src="{% static 'images/github.png' %}" alt="github" class="foot-icon">
+                </a>
+                <a href="https://www.instagram.com/chetan.10.30/" class="insta">
+                    <img src="{% static 'images/insta.png' %}" alt="insta" class="foot-icon">
+                </a>
+                <a href="https://twitter.com/chetan_1030" class="twitter">
+                    <img src="{% static 'images/twitter.png' %}" alt="twitter" class="foot-icon">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

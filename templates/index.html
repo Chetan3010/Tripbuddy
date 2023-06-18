@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends 'master.html' %}
+    {% load static %}
+</head>
+<body>
+    
+    {% block content %}
+    <div class="container-fluid">
+        <div id="search-div">
+            <div class="d-flex justify-content-around ">
+                <div class="align-items-center">
+                    <form action="{% url 'trips:trip_search' %}" method="post">
+                        {% csrf_token %}
+                    <h1 class="slogan">Book your trip now...</h1>
+                    <div class="search-bar">
+                        <div class="srch">
+                            <img class="srch-location" src="{% static 'images/location.png' %}" alt="location">
+                            <input class="srch-box" type="text" name="search-place" placeholder="Where do you want to go?">
+                        </div>
+                        <button class="btn btn-danger srch-btn" type="submit">Search</a>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="homepage-triptypes">
+                {% include 'triptypes.html' %}
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="container">
+        <div class="top-destinations">
+                <h2 class="top-dest-title">Top places to visit</h2>
+                <p class="top-dest-subtitle">Book a trip to one of the world's top destinations.</p>
+            <div class="destinations-item">
+                <a href="{% url 'trips:filter_trips' 'tour' 'india' %}" class="destinations-box">
+                    <div id="carouselExampleSlidesOnly1" class="carousel slide  carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for i in india_images %}
+                                {% if forloop.first %}
+                                    <div class="carousel-item active">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% else %}
+                                    <div class="carousel-item">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly1" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly1" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                    </div>
+                    <span class="dest-title">india</span>
+                </a>                
+                <a href="{% url 'trips:filter_trips' 'tour' 'maldives' %}" class="destinations-box">
+                    <div id="carouselExampleSlidesOnly2" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for i in maldives_images %}
+                                {% if forloop.first %}
+                                    <div class="carousel-item active">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% else %}
+                                    <div class="carousel-item">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly2" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly2" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                    </div>
+                    <span class="dest-title">maldives</span>
+                </a>
+                <a href="{% url 'trips:filter_trips' 'tour' 'switzerland' %}" class="destinations-box">
+                    <div id="carouselExampleSlidesOnly3" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for i in switzerland_images %}
+                                {% if forloop.first %}
+                                    <div class="carousel-item active">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% else %}
+                                    <div class="carousel-item">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly3" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly3" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                    </div>
+                    <span class="dest-title">Switzerland</span>
+                </a>
+                <a href="{% url 'trips:filter_trips' 'tour' 'united kingdom' %}" class="destinations-box">
+                    <div id="carouselExampleSlidesOnly4" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for i in uk_images %}
+                                {% if forloop.first %}
+                                    <div class="carousel-item active">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% else %}
+                                    <div class="carousel-item">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly4" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly4" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                    </div>
+                    <span class="dest-title">UK</span>
+                </a>
+                <a href="{% url 'trips:filter_trips' 'tour' 'china' %}" class="destinations-box">
+                    <div id="carouselExampleSlidesOnly5" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for i in china_images %}
+                                {% if forloop.first %}
+                                    <div class="carousel-item active">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% else %}
+                                    <div class="carousel-item">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly5" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly5" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                    </div>
+                    <span class="dest-title">china</span>
+                </a>
+                <a href="{% url 'trips:filter_trips' 'tour' 'norway' %}" class="destinations-box">
+                    <div id="carouselExampleSlidesOnly6" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for i in norway_images %}
+                                {% if forloop.first %}
+                                    <div class="carousel-item active">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% else %}
+                                    <div class="carousel-item">
+                                    <img src="{{ i.trip_image.url }}" class="d-block w-100 dest-img" alt="image">
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly6" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                          </button>
+                          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly6" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                          </button>
+                    </div>
+                    <span class="dest-title">norway</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+</body>
+</html>

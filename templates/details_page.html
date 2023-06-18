@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends 'master.html' %}
+    {% load static %}
+</head>
+<body>
+    {% block content %}
+
+    
+    <div class="container-fluid">
+        <h1 class="detail-title" >{{ trip_detail.trip_name }}</h1>
+        <div id="carouselExampleSlidesOnly1" class="carousel slide  carousel-fade" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                {% for i in images %}
+                    {% if forloop.first %}
+                        <div class="carousel-item active"  data-bs-interval="2000">
+                        <img src="{{ i.images.url }}" class="d-block w-100 detail-image" alt="image">
+                        </div>
+                    {% else %}
+                        <div class="carousel-item"  data-bs-interval="2000">
+                        <img src="{{ i.images.url }}" class="d-block w-100 detail-image" alt="image">
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly1" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly1" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+        </div>
+        <!-- <img class="detail-image" src="{{ trip_detail.trip_image.url }}" alt="trip_image"> -->
+        <div class="container details">
+
+            <h1 class="page-header">Trip Details</h1>
+
+            <a class="btn btn-det" data-bs-toggle="collapse" href="#collapseExample6" role="button" aria-expanded="false" aria-controls="collapseExample">
+                
+                <h3 class="he-desc">
+                    <img src="{% static 'images/pricing.png' %}" alt="icon" class="droper-icon">Pricing</h3>
+                <img src="{% static 'images/down.png' %}" alt="down-click" class="down-click">
+            </a>
+            <div class="collapse" id="collapseExample6">
+                <div class="card card-body">
+                    <div>
+                        <span class="pricing-det">starts from</span>
+                        <h5 class="title">INR 99999</h5>
+                        <span class="pricing-det">Avg. per person</span>
+                    </div>
+                </div>
+            </div>  
+            
+            
+            <a class="btn btn-det" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                
+                <h3 class="he-desc">
+                    <img src="{% static 'images/description.png' %}" alt="icon" class="droper-icon">Description</h3>
+                <img src="{% static 'images/down.png' %}" alt="down-click" class="down-click">
+            </a>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <h5 class="desc">{{ trip_detail.trip_description }}</h5>
+                </div>
+            </div>    
+
+            <a class="btn btn-det" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample">
+                
+                <h3 class="he-desc">
+                    <img src="{% static 'images/booking.png' %}" alt="icon" class="droper-icon">Booking Process</h3>
+                <img src="{% static 'images/down.png' %}" alt="down-click" class="down-click">
+            </a>
+            <div class="collapse" id="collapseExample1">
+                <div class="card card-body">
+                    <div class="payment-info-pan pay-info">
+                        <div class="line">
+                            <div class="pill green pan-lft">
+                                <a data-bs-toggle="modal" data-bs-target="#staticBackdrop">Book now, pay later</a>
+                            </div>
+                          <p class="text">
+                            <span id="experiment-row">No need to enter any payment details now.<br></span>
+                            You only need to pay 48h after your booking is confirmed.
+                          </p>
+                        </div>
+                        <div class="line">
+                          <h5 class="pan-lft">Payment options</h5>
+                          <ul class="icons">
+                            <img src="{% static 'images/visa.png' %}" alt="" class="pay-icon">
+                            <img src="{% static 'images/mastercard.png' %}" alt="" class="pay-icon">
+                            <img src="{% static 'images/rupay.png' %}" alt="" class="pay-icon">
+                            <img src="{% static 'images/bhimupi.png' %}" alt="" class="pay-icon">                         
+                          </ul>
+                        </div>
+                    </div>
+                    <div class="text-wrapper fade-onload">
+                        <div class="book-box">
+                            <p class="title">1. BOOKING.</p>
+                            <p class="text">Once we receive your booking, we double check availability with the dive operator and reserve your spot.</p>
+                        </div>
+                        <div class="book-box">
+                            <p class="title">2. CONFIRMATION.</p>
+                            <p class="text">We usually get back to you within 24 hours to confirm that your booking is final.</p>
+                        </div>
+                        <div class="book-box">
+                            <p class="title">3. 48H FREE CANCELLATION PERIOD.</p>
+                            <p class="text">You then have 48 hours to take care of other travel arrangements. Your credit card will only be charged after that period.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <a class="btn btn-det" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
+                
+                <h3 class="he-desc">
+                    <img src="{% static 'images/payment.png' %}" alt="icon" class="droper-icon">Payment &amp; cancellation</h3>
+                <img src="{% static 'images/down.png' %}" alt="down-click" class="down-click">
+            </a>
+            <div class="collapse" id="collapseExample2">
+                <div class="card card-body">
+                    <div class="payment fade-onload">
+                        <div>
+                            <p class="title">Payment terms</p>
+                            <div class="circled-list">
+                                <ul>
+                                    <li class="subtext">Now: 0%</li>
+                                    <li class="subtext">
+                                        48 hours after booking confirmation: 20%
+                                    </li>
+                                    <li class="subtext">
+                                        40 days before trip start: 100%
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="title">Cancellation fee</p>
+                            <div class="circled-list">
+                                
+                                <ul>
+                                    <li>
+                                        <span class="subtext">
+                                            Free cancellation for 48h after confirmation
+                                        
+                                    </li>
+                                    <li>       
+                                        <span class="subtext">
+                                            5.0% of the total booking amount will be charged if you cancel more than 60 days prior
+                                            to arrival
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <span class="subtext">
+                                            100.0% will be charged if you cancel less than 60 days prior to arrival
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a class="btn btn-det" data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <h3 class="he-desc">
+                <img src="{% static 'images/position.png' %}" alt="icon" class="droper-icon">what to see</h3>
+                <img src="{% static 'images/down.png' %}" alt="down-click" class="down-click">
+            </a>
+            <div class="collapse" id="collapseExample3">
+                <div class="card card-body">
+                    <h5 class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
+                </div>
+            </div> 
+
+            <a class="btn btn-det" data-bs-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample">
+                
+                <h3 class="he-desc"><img src="{% static 'images/waypoint.png' %}" alt="icon" class="droper-icon">how to get there</h3>
+                <img src="{% static 'images/down.png' %}" alt="down-click" class="down-click">
+            </a>
+            <div class="collapse" id="collapseExample4">
+                <div class="card card-body">
+                    <h5 class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
+                </div>
+            </div> 
+
+            <a class="btn btn-det" data-bs-toggle="collapse" href="#collapseExample5" role="button" aria-expanded="false" aria-controls="collapseExample">
+                
+                <h3 class="he-desc"><img src="{% static 'images/description.png' %}" alt="icon" class="droper-icon">not implimented yet</h3>
+                <img src="{% static 'images/down.png' %}" alt="down-click" class="down-click">
+            </a>
+            <div class="collapse" id="collapseExample5">
+                <div class="card card-body">
+                    <h5 class="desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h5>
+                </div>
+            </div> 
+
+            <div class="d-grid gap-2 col-6 mx-auto book-now">
+                <a class="btn btn-danger button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Book Now</a>
+            </div>
+
+        </div>
+        
+    </div>
+    
+    {% include 'modal.html' %}
+
+    {% endblock %}
+
+    
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends 'master.html' %}
+    {% load static %}
+</head>
+<body>
+    {% block content %}
+    {% if trip_country is not None %}
+    <div class="container trips-filter-box">
+        <div class="triptypes">
+            <a href="{% url 'trips:filter_trips' 'tour' trip_country %}" class="triptype-box">
+                <img class="triptype-icon" src="{% static 'images/tourism.png' %}" alt="tours">
+                <span class="triptype-title">tours</span>
+            </a>
+            <a href="{% url 'trips:filter_trips' 'trek' trip_country %}" class="triptype-box">
+                <img class="triptype-icon" src="{% static 'images/tourist.png' %}" alt="treks">
+                <span class="triptype-title">treks</span>
+            </a>
+            <a href="{% url 'trips:filter_trips' 'resort' trip_country %}" class="triptype-box">
+                <img class="triptype-icon" src="{% static 'images/resort.png' %}" alt="resorts">
+                <span class="triptype-title">resorts</span>
+            </a>
+            <a href="{% url 'trips:filter_trips' 'event' trip_country %}" class="triptype-box">
+                <img class="triptype-icon" src="{% static 'images/stage.png' %}" alt="events">
+                <span class="triptype-title">events</span>
+            </a>
+            <a href="{% url 'trips:filter_trips' 'diving' trip_country %}" class="triptype-box">
+                <img class="triptype-icon" src="{% static 'images/scuba.png' %}" alt="diving">
+                <span class="triptype-title">diving</span>
+            </a>
+            <a href="{% url 'trips:filter_trips' 'skiing' trip_country %}" class="triptype-box">
+                <img class="triptype-icon" src="{% static 'images/ski.png' %}" alt="ski">
+                <span class="triptype-title">skiing</span>
+            </a>
+        </div>
+
+        <h1 class="result-header">{{ filtered_trips|length }} {{ trip_type }}s in the {{ trip_country }}.</h1>
+    
+    {% else %}
+        ` <h1 class="result-header">{{ filtered_trips|length }} matching results found.</h1>
+    {% endif %}
+        
+        
+        
+        {% for i in filtered_trips %}
+        <div class="result-list">
+            <div class="result-item">
+                <div class="result-content">
+                    <div class="result-image">
+                        <img class="result-img-tag" src="{{ i.trip_image.url }}" alt="result-image">
+                    </div>
+                    <div class="result-info">
+                        <div class="result-head">
+                            <a href="{% url 'trips:trip_detail' i.id %}" class="result-title">{{ i.trip_name }}</a>        
+                        </div>
+                        <div class="result-rating">
+                            {% if i.trip_rating is 5 %}
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                            {% elif i.trip_rating is 4 %}
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                            {% elif i.trip_rating is 3 %}
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                            {% elif i.trip_rating is 2 %}
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                            {% elif i.trip_rating is 1 %}
+                                <img src="{% static 'images/star-filled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                            {% else %}
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                                <img src="{% static 'images/star-unfilled.png' %}" alt="star" class="rating-star">
+                            {% endif %}
+                        </div>
+                        <div class="result-footer">
+                            <div class="half result-footer-left">
+                                <div>
+                                    <div class="result-loc">
+                                        <img class="result-location-icon" src="{% static 'images/location.png' %}" alt="location">
+                                        <p class="result-location">{{ i.trip_sublocation|title }}, {{ i.trip_location|title }}.</p>
+                                    </div>
+                                    <div class="result-extras">
+                                        <p>
+                                            <ol>
+                                                <li>will be added later</li>
+                                                <li>will be added later</li>
+                                                <li>will be added later</li>
+                                            </ol>
+                                        </p>
+                                    </div>
+                                </div></div>
+                            
+                            <div class="half result-footer-right">
+                                <div class="result-price">
+                                    <span class="from">From</span>
+                                    <p class="price">INR {{ i.trip_cost }}/-</p>
+                                </div>
+                                {% if user.is_authenticated %}
+                                <a class="btn btn-danger button btn-price" href="{% url 'trips:trip_detail' i.id %}">View Details</a>
+                                {% else %}
+                                <a class="btn btn-danger button btn-price" data-bs-toggle="modal" data-bs-target="#signupin">View Details</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        
+        {% include 'modal2.html' %}
+
+    </div>
+    {% endblock %}
+</body>
+</html>
