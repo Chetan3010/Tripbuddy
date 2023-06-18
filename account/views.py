@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages as m
 from .models import *
+from django.http import HttpResponse
+from git import Repo # 
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def signup_signin(request):
@@ -136,3 +139,13 @@ def tripup(request,id):
         f=TripsForm(instance=data)
         context = {'form':f,'title':"Add Trip Images"}
         return render(request,'addtrip.html',context)
+    
+@csrf_exempt
+def webhook(request):
+    if request.method == 'POST':
+        repo = Repo('./django-schools')
+        git = repo.git
+        git.checkout('master')
+        git.pull()
+        return HttpResponse('pulled_success')
+    return HttpResponse('get_request', status=400)
