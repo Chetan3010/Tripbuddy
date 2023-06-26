@@ -140,15 +140,15 @@ def tripup(request,id):
         context = {'form':f,'title':"Add Trip Images"}
         return render(request,'addtrip.html',context)
     
-@csrf_exempt
-def webhook(request):
-    event = request.META.get('HTTP_X_GITHUB_EVENT', 'ping')
-    if event == 'POST':
-        repo = Repo('https://github.com/Chetan1030/Tripbuddy.git')
-        git = repo.git
-        git.checkout('master')
-        git.pull()
-        return HttpResponse('pulled_success')
-    return HttpResponse(status=204)
+# @csrf_exempt
+# def webhook(request):
+#     event = request.META.get('HTTP_X_GITHUB_EVENT', 'ping')
+#     if event == 'POST':
+#         repo = Repo('https://github.com/Chetan1030/Tripbuddy.git')
+#         git = repo.git
+#         git.checkout('master')
+#         git.pull()
+#         return HttpResponse('pulled_success')
+#     return HttpResponse(status=204)
 
-# checking
+# # checking

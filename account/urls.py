@@ -17,5 +17,5 @@ urlpatterns = [
     path('triplist',v.triplist,name="triplist"),
     path('tripupdate/<int:id>',v.tripup,name="tripup"),
     path('tripdel/<int:id>',v.tripdel,name="tripdel"),
-    path('webhook',v.webhook),
+    # path('webhook',v.webhook),
 ]
