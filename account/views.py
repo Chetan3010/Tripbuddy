@@ -142,12 +142,11 @@ def tripup(request,id):
     
 @csrf_exempt
 def webhook(request):
-    if request.method == 'POST':
+    event = request.META.get('HTTP_X_GITHUB_EVENT', 'ping')
+    if event == 'POST':
         repo = Repo('https://github.com/Chetan1030/Tripbuddy.git')
         git = repo.git
         git.checkout('master')
         git.pull()
         return HttpResponse('pulled_success')
-    return HttpResponse('get_request',status=400)
-
-# coment check
+    return HttpResponse(status=204)
