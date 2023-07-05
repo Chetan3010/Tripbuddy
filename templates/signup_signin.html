@@ -73,7 +73,7 @@
                     <span class="{{ i.tags }}">{{ i }}</span>
                 {% endfor %}
             {% endif %}
-            <a class="a" href="#">Forgot your password?</a>
+            <a class="a" href="{% url 'account:forget' %}">Forgot your password?</a>
             <input class="button" type="submit" value="Sign In">
         </form>
     </div>

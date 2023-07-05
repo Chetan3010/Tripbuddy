@@ -5,10 +5,17 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages as m
 from .models import *
+import smtplib
+import math, random
 from django.http import HttpResponse
 from git import Repo # 
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
+
+EMAIL_HOST = 'live.smtp.mailtrap.io'
+EMAIL_HOST_USER = 'api'
+EMAIL_HOST_PASSWORD = 'cdb3b038595283e59d95c19e43b583a3'
+EMAIL_PORT = '587'
 
 def signup_signin(request):
     return render(request,"signup_signin.html")
@@ -140,6 +147,25 @@ def tripup(request,id):
         context = {'form':f,'title':"Add Trip Images"}
         return render(request,'addtrip.html',context)
     
+def generateOTP(request):
+    OTP = 0
+    for i in range(4):
+        dig = math.floor(random.random() * 10)
+        OTP = (OTP * 10) + dig
+    return OTP
+
+def forget(request):
+    # s = smtplib.SMTP('smtp.gmail.com', 587)
+    # s.starttls()
+    # s.login("ckale6795@gmail.com","Kale@3010")
+    # message = "Test message"
+    # s.sendmail("ckale6795@gmail.com", "ckale2001@gmail.com", message)
+    # s.quit()
+    if request.method == "POST":
+        pass
+    else:
+        return render(request,"forget.html")
+
 # @csrf_exempt
 # def webhook(request):
 #     event = request.META.get('HTTP_X_GITHUB_EVENT', 'ping')

@@ -18,6 +18,13 @@ class Bookings(models.Model):
     class Meta:
         db_table = 'Bookings'
 
+class UserOtp(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    otp = models.IntegerField()
+
+    class Meta:
+        db_table = 'UserOtp'
+
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Bookings
@@ -36,4 +43,9 @@ class TripsForm(forms.ModelForm):
 class TripsImagesForm(forms.ModelForm):
     class Meta:
         model = Trips_images
+        fields = "__all__"
+
+class UserOtpForm(forms.ModelForm):
+    class Meta:
+        model = UserOtp
         fields = "__all__"
