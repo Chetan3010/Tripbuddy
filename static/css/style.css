@@ -282,7 +282,7 @@ hr {
 }
 
 .success {
-    color: red;
+    color: rgb(15, 206, 0);
     font-style: italic;
     /* font-weight: 200; */
     /* font-size: 14px; */
@@ -1623,4 +1623,38 @@ table, th, tr, td {
     font-weight: 600;
     color: #ffffff;
     margin: auto;
+}
+
+.fg-ip {
+    width: 70%;
+}
+
+.forget {
+    /* align-items: center; */
+    flex-direction: row;
+    justify-content: normal;
+    padding: 0;
+}
+
+.fg-btn {
+    margin-left: 20px;
+}
+
+.change-pass {
+    align-items: flex-start;
+    flex-direction: column;
+    text-align: left;
+}
+
+.cp-btn {
+    margin: 10px auto;
+}
+
+.cp {
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    font-family: 'Poppins';
+    margin: 0;
 }

@@ -6,16 +6,18 @@ from django.contrib.auth.models import User
 from django.contrib import messages as m
 from .models import *
 import smtplib
+import ssl
+from email.message import EmailMessage
 import math, random
+from django.shortcuts import get_object_or_404
+import threading 
 from django.http import HttpResponse
 from git import Repo # 
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
-EMAIL_HOST = 'live.smtp.mailtrap.io'
-EMAIL_HOST_USER = 'api'
-EMAIL_HOST_PASSWORD = 'cdb3b038595283e59d95c19e43b583a3'
-EMAIL_PORT = '587'
+email_sender = 'tripbuddy.in@gmail.com'
+email_password = 'pxrwozlyauqvzlxj'
 
 def signup_signin(request):
     return render(request,"signup_signin.html")
@@ -147,34 +149,140 @@ def tripup(request,id):
         context = {'form':f,'title':"Add Trip Images"}
         return render(request,'addtrip.html',context)
     
-def generateOTP(request):
+def generateOTP(request,email):
     OTP = 0
     for i in range(4):
         dig = math.floor(random.random() * 10)
         OTP = (OTP * 10) + dig
+
+    email_receiver = email
+    subject = 'Tripbuddy password assitance'
+    body = """
+        <!DOCTYPE html>
+        <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="x-apple-disable-message-reformatting">
+        <title>Tripbuddy password assitance</title>
+        <style>
+            body {
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            .brand a{
+                font-size: 24px;
+                font-weight: 800;
+                letter-spacing: 1px;
+                cursor: pointer;
+                font-family: 'Poppins', sans-serif;
+                color: #fe4220;
+                float: inline-start;
+            }
+            .brand span{
+                margin: 10px;
+                float: right;
+            }
+            .content {
+                margin-left: 10px;
+            }
+        </style>
+        </head>
+        <body>
+            <div class="brand">
+                <a href="https://chetan3010.pythonanywhere.com/">TripBuddy</a>
+                <span>Password assitance</span>
+            </div>
+            <div class="content">
+                <hr>
+                <span>To authenticate, please use the following One Time Password (OTP):</span>
+                <h1>"""+str(OTP)+"""</h1>
+                <p>We hope to see you again soon.</p>
+            </div>
+        </body>
+        </html>
+    """
+
+    em = EmailMessage()
+    em['From'] = email_sender
+    em['To'] = email_receiver
+    em['Subject'] = subject
+    em.set_content(body,subtype='html')
+
+    context = ssl.create_default_context()
+
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+        smtp.login(email_sender, email_password)
+        smtp.sendmail(email_sender, email_receiver, em.as_string())
     return OTP
 
 def forget(request):
-    # s = smtplib.SMTP('smtp.gmail.com', 587)
-    # s.starttls()
-    # s.login("ckale6795@gmail.com","Kale@3010")
-    # message = "Test message"
-    # s.sendmail("ckale6795@gmail.com", "ckale2001@gmail.com", message)
-    # s.quit()
     if request.method == "POST":
-        pass
+        forgetemail = request.POST.get("emailid")
+        try:
+            user = get_object_or_404(User,email=forgetemail)
+        except:
+            m.error(request,"Account doesn't exist with this email!")
+            return render(request,"forget.html")
+        if user is not None:
+            try:
+                checkExistUser = get_object_or_404(UserOtp,user=user)
+            except:
+                print("Except occured!")
+            else:
+                checkExistUser.delete()
+            finally:
+                f = UserOtp()
+                f.user = user
+                f.otp = generateOTP(request,forgetemail)
+                f.save()
+
+            return redirect("account:forget-verify",forgetemail)
+        else:
+            pass
     else:
         return render(request,"forget.html")
 
-# @csrf_exempt
-# def webhook(request):
-#     event = request.META.get('HTTP_X_GITHUB_EVENT', 'ping')
-#     if event == 'POST':
-#         repo = Repo('https://github.com/Chetan1030/Tripbuddy.git')
-#         git = repo.git
-#         git.checkout('master')
-#         git.pull()
-#         return HttpResponse('pulled_success')
-#     return HttpResponse(status=204)
+def forget_verify(request,forgetemail):
+    if request.method == "POST":
+        try:
+            user = get_object_or_404(User,email=forgetemail)
+        except:
+            m.error(request,"Account doesn't exist with this email!")
+            return redirect("account:forget-verify",forgetemail)
+        otp = request.POST.get("otp")
 
-# # checking
+        try:
+            fverify = get_object_or_404(UserOtp,user=user,otp=otp)
+        except:
+            m.error(request,"The One Time Password (OTP) you entered is not valid. Please try again.")
+            return redirect("account:forget-verify",forgetemail) 
+        fverify.delete()
+        return redirect("account:change-password",forgetemail)
+    else:
+        try:
+            user = get_object_or_404(User,email=forgetemail)
+        except:
+            return redirect("account:forget")
+        context = { 'femail':forgetemail,'username':user.username }
+        return render(request,"forget-verify.html",context)
+        
+
+def change_password(request,forgetemail):
+    if request.method == "POST":
+        pass1 = request.POST.get("password1")
+        pass2 = request.POST.get("password2")
+        if pass1 != pass2:
+            m.error(request,"Passwords do no match.")
+            return redirect("account:change-password",forgetemail)
+        else:
+            f = User.objects.get(email=forgetemail)
+            username = f.username
+            f.set_password(pass1)
+            f.save()
+            m.success(request,"Login with your new password "+username+".")
+            return redirect("account:signup_signin")
+    else:
+        f = ChangePasswordForm
+        context = { 'changepass':ChangePasswordForm }
+        return render(request,"change-password.html",context)
+

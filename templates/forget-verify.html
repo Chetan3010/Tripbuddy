@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends 'master.html' %}
+    {% load static %}
+</head>
+<body>
+    {% block content %}
+    <div class="container ">
+        <h1 class="page-header">Verification required.</h1>
+            <h3>We've sent an OTP to the email {{ femail }}.</h1>
+            <form class="form forget" method="POST">
+                {% csrf_token %}
+                <input type="number" name="otp" class="input fg-ip" placeholder="Enter your otp">
+                <input type="submit" value="SUBMIT" class="button fg-btn">
+            </form>
+            {% if messages %}
+            {% for i in messages %}
+                <span class="{{ i.tags }}">{{ i }}</span>
+            {% endfor %}
+            {% endif %}
+    </div>
+    {% endblock %}
+</body>
+</html>

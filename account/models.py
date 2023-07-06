@@ -21,7 +21,6 @@ class Bookings(models.Model):
 class UserOtp(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     otp = models.IntegerField()
-
     class Meta:
         db_table = 'UserOtp'
 
@@ -49,3 +48,8 @@ class UserOtpForm(forms.ModelForm):
     class Meta:
         model = UserOtp
         fields = "__all__"
+
+class ChangePasswordForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['email','password1','password2']

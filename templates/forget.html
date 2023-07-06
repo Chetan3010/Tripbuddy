@@ -9,13 +9,19 @@
 </head>
 <body>
     {% block content %}
-    <div class="container ">
-        <h1 class="page-header">Forget your password.</h1>
-        <form class="form forget" method="POST">
-            {% csrf_token %}
-            <input type="email" name="emailid" class="input fg-ip">
-            <input type="submit" value="SEND" class="button fg-btn">
-        </form>
+    <div class="container">
+        <h1 class="page-header">Password assistance.</h1>
+            <h3>Enter your email to associated with tripbuddy.</h1>
+            <form class="form forget" method="POST">
+                {% csrf_token %}
+                <input type="email" name="emailid" class="input fg-ip">
+                <input type="submit" value="SEND" class="button fg-btn">
+            </form>
+            {% if messages %}
+            {% for i in messages %}
+                <span class="{{ i.tags }}">{{ i }}</span>
+            {% endfor %}
+            {% endif %}
 
     </div>
     {% endblock %}
