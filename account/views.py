@@ -34,6 +34,7 @@ def signup(request):
 def signin(request):
     if request.POST:
         uname = request.POST.get("username")
+        uname = uname.lower()
         uemail = request.POST.get("email")
         upass = request.POST.get("password")
         user = authenticate(request,username=uname,email=uemail,password=upass)
