@@ -21,6 +21,11 @@
             <input id="username" class="input" type="text" name="username" maxlength="150" value="{{ ud.username }}" placeholder="Username" required>
             <label for="email">Email Id</label>
             <input id="email" class="input" type="email" name="email" maxlength="254" placeholder="Email" value="{{ ud.email }}" required>
+                {% if messages %}
+                {% for i in messages %}
+                    <span class="{{ i.tags }}">{{ i }}</span>
+                {% endfor %}
+                {% endif %}
             <input class="bt" type="submit" value="SAVE">
         </form>
 

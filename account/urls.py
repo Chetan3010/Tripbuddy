@@ -20,5 +20,5 @@ urlpatterns = [
     path('forget-password',v.forget,name="forget"),
     path('forget-verify/<str:forgetemail>',v.forget_verify,name="forget-verify"),
     path('change-password/<str:forgetemail>',v.change_password,name="change-password"),
-    # path('webhook',v.webhook),
+    path('add-admin',v.addAdmin,name="add-admin"),
 ]

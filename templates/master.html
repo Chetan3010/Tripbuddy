@@ -35,11 +35,33 @@
                             <img class="user" src="{% static 'images/user.png' %}" alt="user">
                             {% endif %}
                         </a>
+
                         <ul class="dropdown-menu">
+
                             {% if user.is_authenticated %}
                             <span class="dropdown-item username">{{ user }}</span>
                             <hr>
+
+                            {% if perms.trips or perms.trips_images %}
+
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account:edit-profile' %}">
+                                    <img src="{% static 'images/edit-profile.png' %}" alt="edit profile"
+                                        class="dropdown-icon">
+                                    <span>edit profile</span>
+                                </a>
+                            </li>
+
                             {% if user.is_superuser %}
+                            <li>
+                                <a class="dropdown-item" href="{% url 'account:add-admin' %}">
+                                    <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
+                                        class="dropdown-icon">
+                                    <span>Add Admin</span>
+                                </a>
+                            </li>
+                            {% endif %}
+
                             <li>
                                 <a class="dropdown-item" href="{% url 'account:addtrip' %}">
                                     <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
@@ -56,8 +78,7 @@
                             </li>
                             <li>
                                 <a class="dropdown-item" href="{% url 'account:triplist' %}">
-                                    <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
-                                        class="dropdown-icon">
+                                    <img src="{% static 'images/list.png' %}" alt="signup/signin" class="dropdown-icon">
                                     <span>Trip List</span>
                                 </a>
                             </li>
@@ -84,12 +105,14 @@
                                     <span>my bookings</span>
                                 </a>
                             </li>
+
                             <li>
                                 <a class="dropdown-item" href="{% url 'account:signout' %}">
                                     <img src="{% static 'images/signout.png' %}" alt="sign out" class="dropdown-icon">
                                     <span>sign out</span>
                                 </a>
                             </li>
+
                             {% endif %}
                             {% else %}
                             <li>

@@ -1658,3 +1658,16 @@ table, th, tr, td {
     font-family: 'Poppins';
     margin: 0;
 }
+
+.admin-form {
+    align-items: flex-start;
+}
+
+.admin-form .input {
+    width: 50%;
+    margin-left: 10px;
+}
+
+.admin-form .button {
+    margin-left: 20%;
+}

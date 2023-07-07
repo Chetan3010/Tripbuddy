@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends 'master.html' %}
+    {% load static %}
+</head>
+<body>
+    {% block content %}
+    <div class="container ">
+        <h1 class="page-header">Add admin details.</h1>
+            <form class="form admin-form" method="POST">
+                {% csrf_token %}
+                <label for="fname">First name</label>
+                <input class="input" type="text" name="first_name" maxlength="150" autofocus="" placeholder="first name" id="fname" required>
+
+                <label for="lname">Last name</label>
+                <input class="input" type="text" name="last_name" maxlength="150" placeholder="last name" id="lname" required>
+
+                <label for="username">Username</label>
+                <input class="input" type="text" name="username" maxlength="150" placeholder="username" id="username" required>
+
+                <label for="email">Email</label>
+                <input class="input" type="email" name="email" maxlength="254" placeholder="email" id="email" required>
+
+                <label for="password1">Password</label>
+                <input class="input" type="password" name="password1" autocomplete="new-password" placeholder="password" id="password1" required>
+
+                <label for="password2">Password confirmation</label>
+                <input class="input" type="password" name="password2" autocomplete="new-password" placeholder="password again" id="password2" required>
+                {% if messages %}
+                {% for i in messages %}
+                    <span class="{{ i.tags }}">{{ i }}</span>
+                {% endfor %}
+                {% endif %}
+                <input type="submit" value="Save" class="button">
+            </form>
+            
+    </div>
+    {% endblock %}
+</body>
+</html>

@@ -10,11 +10,7 @@ import ssl
 from email.message import EmailMessage
 import math, random
 from django.shortcuts import get_object_or_404
-import threading 
-from django.http import HttpResponse
-from git import Repo # 
-from django.views.decorators.csrf import csrf_exempt
-# Create your views here.
+from django.http import Http404
 
 email_sender = 'tripbuddy.in@gmail.com'
 email_password = 'pxrwozlyauqvzlxj'
@@ -25,8 +21,13 @@ def signup_signin(request):
 def signup(request):
     if request.POST:
         f=SignupForm(request.POST)
-        f.save()
-        m.success(request,"Account created successfully!")
+        if f.is_valid():
+            f.save()
+            m.success(request,"Account created successfully!")
+        else:
+            m.error(request,"Given credentials didn't validate!")
+            context = {'signup':True}
+            return render(request,"signup_signin.html",context)
         return redirect("account:signup_signin")
     else:
         return render(request,"signup_signin.html")
@@ -96,7 +97,11 @@ def editprofile(request):
         profile.last_name = ln
         profile.username = username
         profile.email = email
-        profile.save()
+        try:
+            profile.save()
+        except Exception as e:
+            m.error(request,e)
+            return redirect("account:edit-profile")
         return redirect("/")
     else:
         f=SignupForm(instance=user_details)
@@ -159,49 +164,49 @@ def generateOTP(request,email):
     email_receiver = email
     subject = 'Tripbuddy password assitance'
     body = """
-        <!DOCTYPE html>
-        <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
-        <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta name="x-apple-disable-message-reformatting">
-        <title>Tripbuddy password assitance</title>
-        <style>
-            body {
-                font-family: Arial, Helvetica, sans-serif;
-            }
-            .brand a{
-                font-size: 24px;
-                font-weight: 800;
-                letter-spacing: 1px;
-                cursor: pointer;
-                font-family: 'Poppins', sans-serif;
-                color: #fe4220;
-                float: inline-start;
-            }
-            .brand span{
-                margin: 10px;
-                float: right;
-            }
-            .content {
-                margin-left: 10px;
-            }
-        </style>
-        </head>
-        <body>
-            <div class="brand">
-                <a href="https://chetan3010.pythonanywhere.com/">TripBuddy</a>
-                <span>Password assitance</span>
-            </div>
-            <div class="content">
-                <hr>
-                <span>To authenticate, please use the following One Time Password (OTP):</span>
-                <h1>"""+str(OTP)+"""</h1>
-                <p>We hope to see you again soon.</p>
-            </div>
-        </body>
-        </html>
-    """
+            <!DOCTYPE html>
+            <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+            <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width,initial-scale=1">
+            <meta name="x-apple-disable-message-reformatting">
+            <title>Tripbuddy password assitance</title>
+            <style>
+                body {
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+                .brand a{
+                    font-size: 24px;
+                    font-weight: 800;
+                    letter-spacing: 1px;
+                    cursor: pointer;
+                    font-family: 'Poppins', sans-serif;
+                    color: #fe4220;
+                    float: inline-start;
+                }
+                .brand span{
+                    margin: 10px;
+                    float: right;
+                }
+                .content {
+                    margin-left: 10px;
+                }
+            </style>
+            </head>
+            <body>
+                <div class="brand">
+                    <a href="https://chetan3010.pythonanywhere.com/">TripBuddy</a>
+                    <span>Password assitance</span>
+                </div>
+                <div class="content">
+                    <hr>
+                    <span>To authenticate, please use the following One Time Password (OTP):</span>
+                    <h1>"""+str(OTP)+"""</h1>
+                    <p>We hope to see you again soon.</p>
+                </div>
+            </body>
+            </html>
+        """
 
     em = EmailMessage()
     em['From'] = email_sender
@@ -266,24 +271,53 @@ def forget_verify(request,forgetemail):
             return redirect("account:forget")
         context = { 'femail':forgetemail,'username':user.username }
         return render(request,"forget-verify.html",context)
-        
+
+def get_referer(request):
+    referer = request.META.get('HTTP_REFERER')
+    if not referer:
+        return None
+    return referer
+
+
 
 def change_password(request,forgetemail):
-    if request.method == "POST":
-        pass1 = request.POST.get("password1")
-        pass2 = request.POST.get("password2")
-        if pass1 != pass2:
-            m.error(request,"Passwords do no match.")
-            return redirect("account:change-password",forgetemail)
-        else:
-            f = User.objects.get(email=forgetemail)
-            username = f.username
-            f.set_password(pass1)
-            f.save()
-            m.success(request,"Login with your new password "+username+".")
-            return redirect("account:signup_signin")
+    if not get_referer(request):
+        raise Http404
     else:
-        f = ChangePasswordForm
-        context = { 'changepass':ChangePasswordForm }
-        return render(request,"change-password.html",context)
+        if request.method == "POST":
+            pass1 = request.POST.get("password1")
+            pass2 = request.POST.get("password2")
+            if pass1 != pass2:
+                m.error(request,"Passwords do no match.")
+                return redirect("account:change-password",forgetemail)
+            else:
+                f = User.objects.get(email=forgetemail)
+                username = f.username
+                f.set_password(pass1)
+                f.save()
+                m.success(request,"Login with your new password "+username+".")
+                return redirect("account:signup_signin")
+        else:
+            f = ChangePasswordForm
+            context = { 'changepass':ChangePasswordForm }
+            return render(request,"change-password.html",context)
 
+@login_required(login_url="account:signup_signin")
+def addAdmin(request):
+    if request.method == "POST":
+        f=SignupForm(request.POST)  
+        if f.is_valid():
+            f.save()
+            username = f.cleaned_data['username']
+            uid = User.objects.get(username=username)
+            uid.user_permissions.add(25,26,27,28,29,30,31,32)
+            m.success(request, 'Admin account created successfully.')
+            return render(request,"add-admin.html")
+        else:
+            try:
+                f.save()
+            except Exception as e:   
+                m.error(request,e)
+            return render(request,"add-admin.html")
+    else:
+        return render(request,"add-admin.html")
