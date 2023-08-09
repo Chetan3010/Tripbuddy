@@ -11,13 +11,16 @@ from email.message import EmailMessage
 import math, random
 from django.shortcuts import get_object_or_404
 from django.http import Http404
+from django.views.decorators.cache import cache_control
 
 email_sender = 'tripbuddy.in@gmail.com'
 email_password = 'pxrwozlyauqvzlxj'
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def signup_signin(request):
     return render(request,"signup_signin.html")
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def signup(request):
     if request.POST:
         f=SignupForm(request.POST)
@@ -32,6 +35,7 @@ def signup(request):
     else:
         return render(request,"signup_signin.html")
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def signin(request):
     if request.POST:
         uname = request.POST.get("username")
@@ -50,11 +54,12 @@ def signin(request):
     else:
         return render(request,"signup_signin.html")
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def signout(request):
     logout(request)
     return redirect("/account/signup-signin")
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
 def booknow(request,id):
 
@@ -70,11 +75,14 @@ def booknow(request,id):
     return redirect("/")
 
 @login_required(login_url="account:signup_signin")
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def mybookings(request):
     uid = request.user.id
     data = Bookings.objects.filter(BK_uid=uid)
     context = {'bookings':data}
     return render(request,"mybookings.html",context)
+
+
 
 @login_required(login_url="account:signup_signin")
 def cancel(request,id):
@@ -83,6 +91,7 @@ def cancel(request,id):
     cancellation.save()
     return redirect("account:mybookings")
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
 def editprofile(request):
     uid = request.user.id
@@ -108,7 +117,7 @@ def editprofile(request):
         context = {'form':f,'ud':user_details}
         return render(request,"editprofile.html",context)
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
 def addtrip(request):
     if request.method == "POST":
@@ -120,6 +129,7 @@ def addtrip(request):
         context = {'form':f,'title':"Add Trip"}
         return render(request,'addtrip.html',context)
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
 def addtripimg(request):
     if request.method == "POST":
@@ -131,18 +141,21 @@ def addtripimg(request):
         context = {'form':f,'title':"Add Trip Images"}
         return render(request,'addtripimg.html',context)
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
 def triplist(request):
     data = trips.objects.all()
     context = {'tl':data}
     return render(request,"triplist.html",context)
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
 def tripdel(request,id):
     data = trips.objects.get(id=id)
     data.delete()
     return redirect("/")
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
 def tripup(request,id):
     data = trips.objects.get(id=id)
@@ -279,7 +292,6 @@ def get_referer(request):
     return referer
 
 
-
 def change_password(request,forgetemail):
     if not get_referer(request):
         raise Http404
@@ -301,6 +313,7 @@ def change_password(request,forgetemail):
             f = ChangePasswordForm
             context = { 'changepass':ChangePasswordForm }
             return render(request,"change-password.html",context)
+
 
 @login_required(login_url="account:signup_signin")
 def addAdmin(request):

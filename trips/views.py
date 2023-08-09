@@ -6,8 +6,10 @@ from account.views import signup_signin
 from rest_framework import serializers,viewsets
 from .serializer import *
 from rest_framework.permissions import IsAdminUser,SAFE_METHODS,BasePermission
-# Create your views here.
+from django.views.decorators.cache import cache_control
 
+# Create your views here.
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
     india_images = trips.objects.filter(trip_country__icontains="india")
     maldives_images = trips.objects.filter(trip_country__icontains="maldives")
@@ -18,6 +20,7 @@ def index(request):
     context = {'india_images':india_images,'maldives_images':maldives_images,'norway_images':norway_images,'china_images':china_images,'switzerland_images':switzerland_images,'uk_images':uk_images}
     return render(request,"index.html",context)
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
 def trip_list(request,trip_type,trip_country):
     if trip_country == "world":
@@ -27,12 +30,14 @@ def trip_list(request,trip_type,trip_country):
     context = {'filtered_trips':data,'trip_type':trip_type,'trip_country':trip_country}
     return render(request,"trips_list.html",context)
 
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
 def trip_detail(request,id):
     data = trips.objects.get(id=id)
     image_data = Trips_images.objects.filter(trip_id=id)
     context = {'trip_detail':data,'images':image_data}
     return render(request,"details_page.html",context)
+
 
 def trip_search(request):
     srch = request.POST.get("search-place")
