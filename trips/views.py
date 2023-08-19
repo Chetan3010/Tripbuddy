@@ -20,6 +20,9 @@ def index(request):
     context = {'india_images':india_images,'maldives_images':maldives_images,'norway_images':norway_images,'china_images':china_images,'switzerland_images':switzerland_images,'uk_images':uk_images}
     return render(request,"index.html",context)
 
+def custom_404(request, exception):
+    return render(request, "error404.html", status=404)
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
 def trip_list(request,trip_type,trip_country):
