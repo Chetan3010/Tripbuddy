@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -41,86 +42,93 @@
                             <span class="dropdown-item username">{{ user }}</span>
                             <hr>
 
-                            {% if perms.trips or perms.trips_images %}
+                                {% if perms.trips or perms.trips_images %}
 
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account:edit-profile' %}">
-                                    <img src="{% static 'images/edit-profile.png' %}" alt="edit profile"
-                                        class="dropdown-icon">
-                                    <span>edit profile</span>
-                                </a>
-                            </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'account:edit-profile' %}">
+                                            <img src="{% static 'images/edit-profile.png' %}" alt="edit profile"
+                                                class="dropdown-icon">
+                                            <span>edit profile</span>
+                                        </a>
+                                    </li>
 
-                            {% if user.is_superuser %}
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account:add-admin' %}">
-                                    <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
-                                        class="dropdown-icon">
-                                    <span>Add Admin</span>
-                                </a>
-                            </li>
-                            {% endif %}
+                                    {% if user.is_superuser %}
+                                        <li>
+                                            <a class="dropdown-item" href="{% url 'account:add-admin' %}">
+                                                <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
+                                                    class="dropdown-icon">
+                                                <span>Add Admin</span>
+                                            </a>
+                                        </li>
+                                    {% endif %}
 
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account:addtrip' %}">
-                                    <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
-                                        class="dropdown-icon">
-                                    <span>Add Trip</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account:addtripimg' %}">
-                                    <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
-                                        class="dropdown-icon">
-                                    <span>Add Trip Images</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account:triplist' %}">
-                                    <img src="{% static 'images/list.png' %}" alt="signup/signin" class="dropdown-icon">
-                                    <span>Trip List</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account:signout' %}">
-                                    <img src="{% static 'images/signout.png' %}" alt="sign out" class="dropdown-icon">
-                                    <span>sign out</span>
-                                </a>
-                            </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'account:addtrip' %}">
+                                            <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
+                                                class="dropdown-icon">
+                                            <span>Add Trip</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'account:addtripimg' %}">
+                                            <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
+                                                class="dropdown-icon">
+                                            <span>Add Trip Images</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'account:triplist' %}">
+                                            <img src="{% static 'images/list.png' %}" alt="signup/signin" class="dropdown-icon">
+                                            <span>Trip List</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'account:mybookings' %}">
+                                            <img src="{% static 'images/bookings.png' %}" alt="my bookings"
+                                                class="dropdown-icon">
+                                            <span>my bookings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'account:signout' %}">
+                                            <img src="{% static 'images/signout.png' %}" alt="sign out" class="dropdown-icon">
+                                            <span>sign out</span>
+                                        </a>
+                                    </li>
+                                {% else %}
+
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'account:edit-profile' %}">
+                                            <img src="{% static 'images/edit-profile.png' %}" alt="edit profile"
+                                                class="dropdown-icon">
+                                            <span>edit profile</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'account:mybookings' %}">
+                                            <img src="{% static 'images/bookings.png' %}" alt="my bookings"
+                                                class="dropdown-icon">
+                                            <span>my bookings</span>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" href="{% url 'account:signout' %}">
+                                            <img src="{% static 'images/signout.png' %}" alt="sign out" class="dropdown-icon">
+                                            <span>sign out</span>
+                                        </a>
+                                    </li>
+
+                                {% endif %}
                             {% else %}
-
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account:edit-profile' %}">
-                                    <img src="{% static 'images/edit-profile.png' %}" alt="edit profile"
-                                        class="dropdown-icon">
-                                    <span>edit profile</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account:mybookings' %}">
-                                    <img src="{% static 'images/bookings.png' %}" alt="my bookings"
-                                        class="dropdown-icon">
-                                    <span>my bookings</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account:signout' %}">
-                                    <img src="{% static 'images/signout.png' %}" alt="sign out" class="dropdown-icon">
-                                    <span>sign out</span>
-                                </a>
-                            </li>
-
-                            {% endif %}
-                            {% else %}
-                            <li>
-                                <a class="dropdown-item" href="{% url 'account:signup_signin' %}">
-                                    <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
-                                        class="dropdown-icon">
-                                    <span>signup / signin</span>
-                                </a>
-                            </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'account:signup_signin' %}">
+                                        <img src="{% static 'images/create-account.png' %}" alt="signup/signin"
+                                            class="dropdown-icon">
+                                        <span>signup / signin</span>
+                                    </a>
+                                </li>
                             {% endif %}
                         </ul>
                     </div>
