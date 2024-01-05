@@ -28,3 +28,4 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += [re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT, }), ]
 
 handler404 = 'trips.views.custom_404'
+handler500 = 'trips.views.custom_500'

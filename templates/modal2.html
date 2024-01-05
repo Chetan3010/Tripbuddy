@@ -1,17 +1,18 @@
 <div class="modal fade" id="signupin" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content modal2">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 access" id="exampleModalLabel">Access Restricted</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <h5>To view further website you must have an TripBuddy account</h4>
-          <h6>Sign in to your account or create a new account if you are a new user</h5>
-        </div>
-        <div class="modal-footer">
-          <a type="button" class="btn button" href="{% url 'account:signup_signin' %}">SignUp/SignIn</a>
-        </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal2">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 access" id="exampleModalLabel">Access Restricted</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5>To view further website you must have an TripBuddy account</h4>
+          <h6>Sign in to your account or create a new account if you are a new user
+        </h5>
+      </div>
+      <div class="modal-footer">
+        <a type="button" class="btn button" href="{% url 'account:signup_signin' %}">SignUp/SignIn</a>
       </div>
     </div>
   </div>
+</div>

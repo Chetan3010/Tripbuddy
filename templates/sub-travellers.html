@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% extends 'master.html' %}
+    {% load static %}
+</head>
+<body>
+    {% block content %}
+    <div class="container">
+        <h1 class="page-header">Enter the details of sub travellers.</h1>
+        <form class="form sub-traveller" method="POST">
+            {% csrf_token %}
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="floatingInput" placeholder="Name" name="BKST_Name" required>
+                <label for="floatingInput">Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="tel" class="form-control" id="floatingInput" placeholder="Phone no" name="BKST_Phone" title="Enter 10 digit only." pattern="[0-9]{10}" required>
+                <label for="floatingInput">Contact No</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="tel" class="form-control" id="floatingInput" placeholder="Aadhar no" name="BKST_aadhar" title="Enter 12 digits only." pattern="[0-9]{12}" required>
+                <label for="floatingInput">Aadhar No</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="floatingInput" placeholder="Email id" name="BKST_aadhar" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" required>
+                <label for="floatingInput">Aadhar No</label>
+            </div>
+            <input class="button" type="submit" value="SAVE">
+        </form>
+    </div>
+    {% endblock %}
+</body>
+</html>

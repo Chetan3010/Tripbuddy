@@ -11,39 +11,33 @@
             {% csrf_token %}
             <div class="form-floating mb-3">
               <input type="text" class="form-control" id="floatingInput" placeholder="Name" name="BK_Name" required>
-              <label for="floatingInput">NAME</label>
+              <label for="floatingInput">Name</label>
             </div>
             <div class="form-floating mb-3">
-              <input type="text" class="form-control" id="floatingInput" placeholder="Phone" name="BK_Phone" required>
-              <label for="floatingInput">PHONE</label>
+              <input type="tel" class="form-control" id="floatingInput" placeholder="Phone" name="BK_Phone" title="Enter 10 digit only." pattern="[0-9]{10}" required>
+              <label for="floatingInput">Contact No</label>
             </div>
-            <!--<div class="form-floating mb-3">-->
-            <!--  <input type="text" class="form-control" id="floatingInput" placeholder="Email Id" name="BK_Email" required>-->
-            <!--  <label for="floatingInput">EMAIL ID</label>-->
-            <!--</div>-->
             <div class="form-floating mb-3">
-              <input type="date" class="form-control" id="travel-date" name="BK_travel_date" required>
-              <label for="travel-date ">TRAVEL DATE</label>
+              <input type="tel" class="form-control" id="floatingInput" placeholder="aadhar" name="BK_AadharNo" title="Enter 12 digits only." pattern="[0-9]{12}" required>
+              <label for="floatingInput">Aadhar No</label>
             </div>
-            
+            <div class="form-floating mb-3">
+              <input type="date" class="form-control" id="travel-date" name="BK_travel_date" min="{{ nextDate|date:"Y-m-d" }}" required>
+              <label for="travel-date ">Travel date</label>
+            </div>
             <div class="form-floating mb-3">
               <select class="form-control" name="BK_No_of_travelers" id="floatingInput" class="form-select" aria-label="Default select example" required>
+                <option class="form-control" value="0">0</option>
                 <option class="form-control" value="1">1</option>
                 <option class="form-control" value="2">2</option>
                 <option class="form-control" value="3">3</option>
                 <option class="form-control" value="4">4</option>
                 <option class="form-control" value="5">5</option>
-                <option class="form-control" value="6">6</option>
-                <option class="form-control" value="7">7</option>
-                <option class="form-control" value="8">8</option>
-                <option class="form-control" value="9">9</option>
-                <option class="form-control" value="10">10</option>
               </select>
               <label for="BK_No_of_travelers">NO OF TRAVELERS</label>
             </div>
         </div>
         <div class="modal-footer">
-
           <button type="submit" class="button">Confirm Booking</button>
         </div>
         </form>

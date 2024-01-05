@@ -7,8 +7,9 @@ from rest_framework import serializers,viewsets
 from .serializer import *
 from rest_framework.permissions import IsAdminUser,SAFE_METHODS,BasePermission
 from django.views.decorators.cache import cache_control
+from datetime import date,timedelta
 
-# Create your views here.
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
     india_images = trips.objects.filter(trip_country__icontains="india")
@@ -22,6 +23,9 @@ def index(request):
 
 def custom_404(request, exception):
     return render(request, "error404.html", status=404)
+
+def custom_500(request, *args, **argv):
+    return render(request, "error500.html", status=500)
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 @login_required(login_url="account:signup_signin")
@@ -38,7 +42,8 @@ def trip_list(request,trip_type,trip_country):
 def trip_detail(request,id):
     data = trips.objects.get(id=id)
     image_data = Trips_images.objects.filter(trip_id=id)
-    context = {'trip_detail':data,'images':image_data}
+    nextDate = (date.today() + timedelta(1))
+    context = {'trip_detail':data,'images':image_data,'nextDate':nextDate}
     return render(request,"details_page.html",context)
 
 

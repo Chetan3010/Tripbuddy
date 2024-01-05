@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,160 +8,207 @@
     {% extends 'master.html' %}
     {% load static %}
 </head>
+
 <body>
     {% block content %}
-    
+
     <div class="container">
 
         <h1 class="page-header">My Bookings</h1>
 
         <div class="container px-1 px-md-4 py-5 mx-auto">
-        {% if bookings %}
+            {% if bookings %}
             {% for i in bookings reversed %}
             {% if i.BK_Cancel is True%}
             <div class="card bk-red">
-            {% elif i.BK_Status is True %}
-            <div class="card bk-green">
-            {% else %}
-            <div class="card">
-            {% endif %}
-                {% if i.BK_Cancel is True %}
-                <h1 class="bkcancel">Booking Cancelled</h1>
                 {% elif i.BK_Status is True %}
-                <h1 class="bkcancel">Booking Confirmed</h1>
-                {% else %}
-                <h1 class="bkcancel">Not Confirmed yet</h1>
-                {% endif %}
-                
-                <div class="d-flex justify-content-between px-3 top">
-                    <div class="d-flex flex-column text-sm-right">
-                        <p class="mb-0 to">To, <span>{{ i.BK_trip_id.trip_country|upper }}</span></p>
-                        <p class="on">On, <span class="font-weight-bold">{{ i.BK_travel_date }}</span></p>
-                    </div>
-                    <div class="d-flex">
-                        <h5>Booking ID <span class="font-weight-bold booking-id">#{{ i.id }}</span></h5>
-                    </div>
-                </div>
-                <!-- Add class 'active' to progress -->
-                <div class="row d-flex justify-content-center">
-                    <div class="col-12">
-                    {% if i.BK_Cancel is True %}
-                    <ul id="progressbar" class="text-center">
-                        <li class="deactive step1"></li>
-                        <li class="deactive step1"></li>
-                        <li class="deactive step1"></li>
-                    </ul>
-                    {% elif i.BK_Status is True %}
-                    <ul id="progressbar" class="text-center">
-                        <li class="active step0"></li>
-                        <li class="active step0"></li>
-                        <li class="active step0"></li>
-                    </ul>
+                <div class="card bk-green">
                     {% else %}
-                    <ul id="progressbar" class="text-center">
-                        <li class="active step0"></li>
-                        <li class="active step0"></li>
-                        <li class="step0"></li>
-                    </ul>
-                    {% endif %}
-                    </div>
-                </div>
-                <div class="row d-flex justify-content-center">
-                    <div class="col-12">
-                        {% if i.BK_Cancel is True %}
-                            <ul id="progressbar-des" class="text-center">
-                                <li>Cancellation Initiated</li>
-                                <li>Cancellation is in progress</li>
-                                <li>Booking Cancelled</li>
-                            </ul>
-                        {% else %}
-                            <ul id="progressbar-des" class="text-center">
-                                <li>Booking Initiated</li>
-                                <li>Booking is in progress</li>
-                                <li>Booking Confirmed</li>
-                            </ul>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="booking-info">
-                    <span class="bk-det">Booking Details</span>
-                    <div class="bk-info">
-                        <div class=bk-box>
-                            <span class="field">Trip Name</span>
-                            <img class="bk-down" src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png"/>
-                            <p class="field-text">{{ i.BK_trip_id.trip_name|title }}</p>
-                        </div>
-                        <div class=bk-box>
-                            <span class="field">Destination</span>
-                            <img class="bk-down" src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png"/>
-                            <p class="field-text">{{ i.BK_trip_id.trip_location|title }}, {{ i.BK_trip_id.trip_location|title }}</p>
-                        </div>
-                        <div class=bk-box>
-                            <span class="field">Total Persons</span>
-                            <img class="bk-down" src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png"/>
-                            <p class="field-text">{{ i.BK_No_of_travelers }}</p>
-                        </div>
-                        <div class=bk-box>
-                            <span class="field">Date</span>
-                            <img class="bk-down" src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png"/>
-                            <p class="field-text">{{ i.BK_travel_date }}</p>
-                        </div>
-                    </div>
-                    <span class="bk-det">Personal Details</span>
-                    <div class="bk-info">
-                        <div class=bk-box>
-                            <span class="field">Name</span>
-                            <img class="bk-down" src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png"/>
-                            <p class="field-text">{{ i.BK_Name|title }}</p>
-                        </div>
-                        <div class=bk-box>
-                            <span class="field">Phone Number</span>
-                            <img class="bk-down" src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png"/>
-                            <p class="field-text">{{ i.BK_Phone }}</p>
-                        </div>
-                        <div class=bk-box>
-                            <span class="field">Email Id</span>
-                            <img class="bk-down" src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png"/>
-                            <p class="field-text">{{ i.BK_Email }}</p>
-                        </div>
-                    </div>
-                    {% if not i.BK_Cancel %}
-                    <div class="cancel">
-                            <a class="button bk-btn" data-bs-toggle="modal" data-bs-target="#exampleModal{{i.id}}">Cancel Booking</a>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="modal fade" id="exampleModal{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm your cancellation?</h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn button btn-secondary" data-bs-dismiss="modal">Discard</button>
-                      <a href="{% url 'account:cancel' i.id %}" class="button bk-btn">Cancel Booking</a>
-                    </div>
-                  </div>
-                </div>
-            </div>
-            {% endfor %}
-        
-        {% else %}
-        <h3>You haven't book any trip yet! 😢</h3>
+                    {% if i.bookingDateValidation %}
+                    <div class="card bk-red">
+                        {% elif i.bookingTimeValidation %}
+                        <div class="card bk-yellow">
+                            {% else %}
+                            <div class="card">
+                                {% endif %}
+                                {% endif %}
+                                {% if i.BK_Cancel is True %}
+                                    <h1 class="bkstatus">Booking Cancelled</h1>
+                                {% elif i.BK_Status is True %}
+                                    <h1 class="bkstatus">Booking Confirmed</h1>
+                                {% elif i.bookingDateValidation %}
+                                    <h1 class="bkstatus bk-expired">Booking EXPIRED</h1>
+                                {% else %}
+                                    <h1 class="bkstatus">Not Confirmed yet</h1>
+                                {% endif %}
 
-        {% endif %}
-        </div>
+                                <div class="d-flex justify-content-between px-3 top">
+                                    <div class="d-flex flex-column text-sm-right">
+                                        <p class="mb-0 to">To, <span>{{ i.BK_trip_id.trip_country|upper }}</span></p>
+                                        <p class="on">On, <span class="font-weight-bold">{{ i.BK_travel_date }}</span>
+                                        </p>
+                                    </div>
+                                    <div class="d-flex">
+                                        <h5>Booking ID <span class="font-weight-bold booking-id">#{{ i.id }}</span></h5>
+                                    </div>
+                                </div>
 
-    </div>
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12">
+                                        {% if i.bookingDateValidation %}
+                                            <ul id="progressbar" class="text-center">
+                                                <li class="deactive step1"></li>
+                                                <li class="deactive step1"></li>
+                                                <li class="deactive step1"></li>
+                                            </ul>
+                                        {% else %}
+                                        {% if i.BK_Cancel is True %}
+                                            <ul id="progressbar" class="text-center">
+                                                <li class="deactive step1"></li>
+                                                <li class="deactive step1"></li>
+                                                <li class="deactive step1"></li>
+                                            </ul>
+                                        {% elif i.BK_Status is True %}
+                                            <ul id="progressbar" class="text-center">
+                                                <li class="active step0"></li>
+                                                <li class="active step0"></li>
+                                                <li class="active step0"></li>
+                                            </ul>
+                                        {% else %}
+                                            <ul id="progressbar" class="text-center">
+                                                <li class="active step0"></li>
+                                                <li class="active step0"></li>
+                                                <li class="step0"></li>
+                                            </ul>
+                                        {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
 
-    
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-12">
+                                        {% if i.bookingDateValidation %}
+                                            <ul id="progressbar-des" class="text-center">
+                                                <li>Booking Initiated</li>
+                                                <li>Travelling Date Exceeded</li>
+                                                <li>Booking Expired</li>
+                                            </ul>
+                                        {% else %}
+                                        {% if i.BK_Cancel is True %}
+                                            <ul id="progressbar-des" class="text-center">
+                                                <li>Cancellation Initiated</li>
+                                                <li>Cancellation is in progress</li>
+                                                <li>Booking Cancelled</li>
+                                            </ul>
+                                        {% else %}
+                                            <ul id="progressbar-des" class="text-center">
+                                                <li>Booking Initiated</li>
+                                                <li>Booking is in progress</li>
+                                                <li>Booking Confirmed</li>
+                                            </ul>
+                                        {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="booking-info">
+                                    <span class="bk-det">Booking Details</span>
+                                    <div class="bk-info">
+                                        <div class=bk-box>
+                                            <span class="field">Trip Name</span>
+                                            <img class="bk-down"
+                                                src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png" />
+                                            <p class="field-text">{{ i.BK_trip_id.trip_name|title }}</p>
+                                        </div>
+                                        <div class=bk-box>
+                                            <span class="field">Destination</span>
+                                            <img class="bk-down"
+                                                src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png" />
+                                            <p class="field-text">{{ i.BK_trip_id.trip_location|title }}, {{
+                                                i.BK_trip_id.trip_location|title }}</p>
+                                        </div>
+                                        <div class=bk-box>
+                                            <span class="field">Total Persons</span>
+                                            <img class="bk-down"
+                                                src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png" />
+                                            <p class="field-text">{{ i.BK_No_of_travelers }}</p>
+                                        </div>
+                                        <div class=bk-box>
+                                            <span class="field">Date</span>
+                                            <img class="bk-down"
+                                                src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png" />
+                                            <p class="field-text">{{ i.BK_travel_date }}</p>
+                                        </div>
+                                    </div>
+
+                                    <span class="bk-det">Personal Details</span>
+                                    <div class="bk-info">
+                                        <div class=bk-box>
+                                            <span class="field">Name</span>
+                                            <img class="bk-down"
+                                                src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png" />
+                                            <p class="field-text">{{ i.BK_Name|title }}</p>
+                                        </div>
+                                        <div class=bk-box>
+                                            <span class="field">Phone Number</span>
+                                            <img class="bk-down"
+                                                src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png" />
+                                            <p class="field-text">{{ i.BK_Phone }}</p>
+                                        </div>
+                                        <div class=bk-box>
+                                            <span class="field">Email Id</span>
+                                            <img class="bk-down"
+                                                src="https://img.icons8.com/fluency-systems-regular/48/null/shift-down.png" />
+                                            <p class="field-text">{{ i.BK_Email }}</p>
+                                        </div>
+                                    </div>
+                                    {% if i.bookingDateValidation %}
+                                    {% else %}
+                                        {% if not i.BK_Cancel %}
+                                            <div class="cancel">
+                                                <a class="button bk-btn" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal{{i.id}}">Cancel Booking</a>
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="exampleModal{{i.id}}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm your
+                                                cancellation?</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn button btn-secondary"
+                                                data-bs-dismiss="modal">Discard</button>
+                                            <a href="{% url 'account:cancel' i.id %}" class="button bk-btn">Cancel
+                                                Booking</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            {% else %}
+                                <h3>You haven't book any trip yet! 😢</h3>
+                            {% endif %}
+                        </div>
+
+                    </div>
 
 
-    
 
 
-    {% endblock %}
+
+
+
+                    {% endblock %}
 </body>
+
 </html>
