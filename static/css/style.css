@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;500;600;700;800;900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400&display=swap');
@@ -1378,11 +1378,13 @@ td {
 
 .google-box {
     text-decoration: none;
-    padding: 5px;
+    padding: 4px;
     float: left;
-    /* text-align: center; */
     background-color: white;
     border-right: 1px solid black;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    /* align-items: center; */
 }
 
 .google:hover {
@@ -1395,19 +1397,39 @@ td {
     text-decoration: none;
     border: 1px solid rgb(0, 0, 0);
     margin-bottom: 5px;
+    border-radius: 100px;
+}
+
+.google-img {
+    /* margin: 2px 1px 2px 2px; */
 }
 
 .google-title {
-    float: right;
-    padding: 5px;
-    margin-top: 2px;
+    /* display: flex; */
+
+    /* float: right; */
+    /* padding: 2.5px; */
+    /* vertical-align: middle; */
+    /* height: 100%; */
+}
+
+.gg-text {
+    margin: auto;
+    padding: 0 5px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.5px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 10px;
 }
 
 .google-title span {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
+    /* font-family: 'Montserrat', sans-serif; */
     color: #ffffff;
-    margin: auto;
+    /* margin: 4px; */
+    vertical-align: middle;
+    font-size: 70%;
 }
 
 .fg-ip {
@@ -1924,11 +1946,23 @@ td {
     }
 
     .google-title span {
-        font-size: 8px;
+        /* display: inline-block; */
+        
+        /* font-size: 8px; */
+        
     }
 
     .notfound .notfound-404 h1 {
         font-size: 148px;
+    }
+
+    .google-box {
+        /* padding: 0; */
+        
+    }
+
+    .gg-text {
+        padding: 0;
     }
 }
 
@@ -1943,11 +1977,13 @@ td {
     .google-img {
         width: 25px;
         height: 25px;
+        /* margin: 5px; */
 
     }
 
     .google-title span {
         font-size: 70%;
+
     }
 }
 

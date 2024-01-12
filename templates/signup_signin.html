@@ -62,12 +62,13 @@
                     <h1 class="h1">Sign in</h1>
 
                     <a href="{% url 'social:begin' 'google-oauth2' %}" class="google">
-                        <div class="google-box">
-                            <img class="google-img" src="{% static 'images/google.png' %}" alt="google-icon"
-                                class="google-icon">
-                        </div>
                         <div class="google-title">
-                            <span>Continue with Google</span>
+                            <span>
+                                <div class="google-box">
+                                    <img class="google-img" src="{% static 'images/google.png' %}" alt="google-icon" class="google-icon">
+                                </div>
+                                <p class="gg-text">
+                                Continue with Google</p></span>
                         </div>
                     </a>
 
