@@ -12,9 +12,12 @@ import math, random
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django.views.decorators.cache import cache_control
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
-email_sender = 'tripbuddy.in@gmail.com'
-email_password = 'pxrwozlyauqvzlxj'
+email_sender = env('email_sender')
+email_password = env('email_password')
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def signup_signin(request):

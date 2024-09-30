@@ -144,6 +144,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
+import environ
+env = environ.Env()
+environ.Env.read_env()
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTHENTICATION_BACKENDS = [
@@ -154,8 +158,8 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_URL = 'logout'
 LOGOUT_REDIRECT_URL = 'login'
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '287191983864-bl9mhustogjihghc4pnc4ksfnrk6ojkm.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = env('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
 SESSION_EXPIRE_SECONDS = 3600
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 SESSION_TIMEOUT_REDIRECT = 'account:signup_signin'
